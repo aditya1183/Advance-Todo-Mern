@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 
-const TodoForm = ({ addTodo }) => {
-  const [heading, setHeading] = useState("");
+const TodoForm = () => {
+  const [tasks, settasks] = useState({
+    heading: "",
+    alltasks: [],
+  });
+
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState([]);
 
   const handleAddTask = (e) => {
     e.preventDefault();
     if (task.trim() === "") return;
 
-    setTasks([...tasks, task]); // Add task to list
+    settasks((prevtasks) => {
+      return { ...prevtasks, alltasks: [...prevtasks.alltasks, task] };
+    });
+
     setTask(""); // Clear task input
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (heading.trim() === "" || tasks.length === 0) return;
-
-    addTodo({ heading, tasks }); // Pass todo with heading and tasks
-    setHeading("");
-    setTasks([]);
+    if (tasks.heading.trim() === "" || tasks.alltasks.length === 0) return;
+    console.log(tasks);
+    settasks({
+      heading: "",
+      alltasks: [],
+    });
   };
 
   return (
@@ -30,8 +37,10 @@ const TodoForm = ({ addTodo }) => {
         <input
           type="text"
           placeholder="Enter Todo Heading..."
-          value={heading}
-          onChange={(e) => setHeading(e.target.value)}
+          value={tasks.heading}
+          onChange={(e) => {
+            settasks({ ...tasks, heading: e.target.value });
+          }}
           className="border p-2 rounded w-full"
         />
 
@@ -55,9 +64,10 @@ const TodoForm = ({ addTodo }) => {
 
         {/* Display Task List */}
         <ul className="list-disc pl-5 text-gray-700">
-          {tasks.map((t, index) => (
-            <li key={index}>{t}</li>
-          ))}
+          {tasks.alltasks?.length > 0 &&
+            tasks.alltasks.map((task, index) => {
+              return <li key={index}>{task}</li>;
+            })}
         </ul>
 
         {/* Submit Button */}

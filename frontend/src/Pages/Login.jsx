@@ -44,7 +44,6 @@ const Login = () => {
         <button>Login</button>
       </form>
       <h1>{login.email}</h1>
-      <TodoForm/>
     </div>
   );
 };
