@@ -2,13 +2,19 @@ import express from "express";
 import mongoose from "mongoose";
 import connectdb from "./Config/db.js";
 import  UserRoutes  from "./Routes/user.routes.js";
+import cookieParser from "cookie-parser";
+
+ // Enable cookie parsing
+
 
 import dotenv from "dotenv";
 import cors from "cors";
+const app = express();
 
 dotenv.config();
+app.use(cookieParser());
 
-const app = express();
+
 
 app.use(express.json()); // Parse JSON requests
 app.use(cors()); // Enable CORS for frontend communication
