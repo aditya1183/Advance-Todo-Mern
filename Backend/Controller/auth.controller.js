@@ -35,7 +35,6 @@ const Register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
@@ -54,7 +53,7 @@ const login = async (req, res) => {
           httpOnly: true, // Secure from JavaScript access
           // secure: process.env.NODE_ENV === "production", // HTTPS in production
           // sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 7 * 60 * 60 * 1000, // 7 days expiration
+          maxAge: 2 * 60 * 1000, // 7 days expiration
         });
 
         return res

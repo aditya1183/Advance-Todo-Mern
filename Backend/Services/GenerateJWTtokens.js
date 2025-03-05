@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 const generatejwttokens = async (userid, email) => {
   try {
     const token = await jwt.sign({ userid, email }, process.env.JWT_SECRET, {
-      expiresIn: "15h",
+      expiresIn: "2min",
     });
 
     if (!token) {

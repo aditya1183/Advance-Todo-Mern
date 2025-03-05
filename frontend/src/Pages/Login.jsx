@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import TodoForm from "../Components/TodoForm";
 
 const Login = () => {
   const [login, setlogin] = useState({
@@ -6,8 +8,19 @@ const Login = () => {
     password: "",
   });
 
-  const handlesubmit = (e) => {
+  const handlesubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post("/api/v1/auth/login", login, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
@@ -31,6 +44,7 @@ const Login = () => {
         <button>Login</button>
       </form>
       <h1>{login.email}</h1>
+      <TodoForm/>
     </div>
   );
 };

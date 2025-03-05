@@ -2,12 +2,21 @@ import React from "react";
 import { RouterProvider, Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import RootLayots from "../Layots/RootLayots";
+import Home from "./Pages/Home";
+import Profile from "./Pages/Profile";
+import AllTasks from "./Pages/AllTasks";
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Signup />} />
+        <Route path="/" element={<RootLayots />}>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/alltasks" element={<AllTasks />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
