@@ -14,6 +14,7 @@ app.use(express.json()); // Parse JSON requests
 app.use(cors()); // Enable CORS for frontend communication
 connectdb();
 app.use("/api/v1/auth", UserRoutes);
+app.use("/api/v1/" , UserRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(3000, () => {
