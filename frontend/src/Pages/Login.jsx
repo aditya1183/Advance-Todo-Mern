@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TodoForm from "../Components/TodoForm";
-
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext/AuthContext";
+import toast from "react-hot-toast";
 const Login = () => {
   const [login, setlogin] = useState({
     email: "",
     password: "",
   });
-
+  const navigate = useNavigate();
+  const { setIsAuthenticated, isAuthenticated } = useAuth();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, []);
   const handlesubmit = async (e) => {
     e.preventDefault();
 
@@ -17,8 +25,13 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       });
+
       console.log(response.data);
+      localStorage.setItem("logintoken", response.data.token);
+      setIsAuthenticated(true);
+      navigate("/");
     } catch (error) {
+      toast.error(error.response.data.message);
       console.log(error);
     }
   };

@@ -46,14 +46,14 @@ const login = async (req, res) => {
       const isMatch = await ComparePassword(user.password, password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: "Incorrect Details password" });
+        return res.status(401).json({ message: "Incorrect Details " });
       } else {
         const token = await generatejwttokens(user._id, user.email);
         res.cookie("token", token, {
           httpOnly: true, // Secure from JavaScript access
           // secure: process.env.NODE_ENV === "production", // HTTPS in production
           // sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 2 * 60 * 1000, // 7 days expiration
+          maxAge: 4 * 60 * 60 * 1000,
         });
 
         return res

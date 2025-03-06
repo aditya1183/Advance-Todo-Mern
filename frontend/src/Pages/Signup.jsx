@@ -1,6 +1,16 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 const Signup = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast.error("You are Already Login! ❌");
+      navigate("/");
+    }
+  });
   const [register, setregister] = useState({
     firstname: "",
     lastname: "",

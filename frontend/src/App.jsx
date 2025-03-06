@@ -2,14 +2,16 @@ import React from "react";
 import { RouterProvider, Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
-import RootLayots from "../Layots/RootLayots";
+import RootLayots from "./Layots/RootLayots";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
 import AllTasks from "./Pages/AllTasks";
 import PrivateRoute from "./AuthContext/privateRoute";
+import { Toaster } from "react-hot-toast";
 const App = () => {
   return (
     <BrowserRouter>
+      <Toaster position="bottom-left" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<RootLayots />}>
           <Route element={<PrivateRoute />}>

@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../AuthContext/AuthContext";
 const TodoForm = () => {
+  const navigate = useNavigate();
+  const { setIsAuthenticated, isAuthenticated } = useAuth();
   const [tasks, settasks] = useState({
     heading: "",
     alltasks: [],
@@ -19,10 +25,27 @@ const TodoForm = () => {
     setTask(""); // Clear task input
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (tasks.heading.trim() === "" || tasks.alltasks.length === 0) return;
-    console.log(tasks);
+    try {
+      const response = await axios.post("/api/task/addtask", tasks, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    if(response.data.status===201){
+      toast.success("Task Added Successfully");
+    }
+    } catch (error) {
+      if (error.response.data.message === "Unauthorized") {
+        setIsAuthenticated(!isAuthenticated);
+
+        localStorage.removeItem("logintoken");
+        toast.error("Your Session is Expired Please Login Again");
+        navigate();
+      }
+    }
     settasks({
       heading: "",
       alltasks: [],
