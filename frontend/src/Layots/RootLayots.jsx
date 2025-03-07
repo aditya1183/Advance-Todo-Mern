@@ -1,9 +1,12 @@
 import React from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useNavigation } from "react-router-dom";
 import toast from "react-hot-toast";
+import loadingsvg from "../assets/loading.svg";
 import { useAuth } from "../AuthContext/AuthContext";
 const RootLayots = () => {
   const { setIsAuthenticated, isAuthenticated } = useAuth();
+  const navigation = useNavigation();
+
   const navigate = useNavigate();
   const handlelogoutuser = () => {
     console.log("aditya aditya");
@@ -42,8 +45,7 @@ const RootLayots = () => {
           </li>
         </ul>
       </nav>
-
-      <Outlet />
+      return <Outlet />
     </div>
   );
 };

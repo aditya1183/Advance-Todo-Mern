@@ -4,13 +4,14 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 const Signup = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  // const { isAuthenticated } = useAuth();
+  const token = localStorage.getItem("logintoken");
   useEffect(() => {
-    if (isAuthenticated) {
+    if (token) {
       toast.error("You are Already Login! ❌");
       navigate("/");
     }
-  });
+  }, [token]);
   const [register, setregister] = useState({
     firstname: "",
     lastname: "",

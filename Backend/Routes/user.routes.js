@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/register", Register);
 router.post("/login", login);
-router.get("/getprofile/:id", authmilldeware, getuserprofile);
+router.get("/userprofile", authmilldeware, getuserprofile);
 
 export default router;

@@ -1,31 +1,60 @@
 import React from "react";
-import { RouterProvider, Routes, Route, BrowserRouter } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  BrowserRouter,
+  Router,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import RootLayots from "./Layots/RootLayots";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
 import AllTasks from "./Pages/AllTasks";
-import PrivateRoute from "./AuthContext/privateRoute";
+import ProtectedRoute from "./AuthContext/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayots />}>
+      <Route
+        index
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />{" "}
+      <Route
+        path="/alltasks"
+        element={
+          <ProtectedRoute>
+            <AllTasks />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Signup />} />
+    </Route>
+  )
+);
+
 const App = () => {
   return (
-    <BrowserRouter>
-      <Toaster position="bottom-left" reverseOrder={false} />
-      <Routes>
-        <Route path="/" element={<RootLayots />}>
-          <Route element={<PrivateRoute />}>
-            <Route index element={<Home />} />
-
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/alltasks" element={<AllTasks />} />
-          </Route>
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Signup />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   );
 };
 

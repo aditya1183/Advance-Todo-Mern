@@ -53,7 +53,7 @@ const login = async (req, res) => {
           httpOnly: true, // Secure from JavaScript access
           // secure: process.env.NODE_ENV === "production", // HTTPS in production
           // sameSite: "strict", // Prevent CSRF attacks
-          maxAge: 4 * 60 * 60 * 1000,
+          maxAge: 1 * 60 * 1000,
         });
 
         return res
